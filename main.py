@@ -1,6 +1,7 @@
 from playerCommands import *
 
-codeClass.codeLen = 3  # Setting the length of the codes to 3
+codeClass.codeLen = 2  # Setting the length of the codes to 3
+assert codeClass.codeLen > 1, "Yikes! Codes must be longer than 1 character!"
 roomFindChance = 50 / 100
 roomClass.spaceChar = "  "  # The char between spaces in a room when it's printed
 roomClass.emptyChar = "-"  # The char in an empty room space
@@ -18,8 +19,16 @@ while player.health > 0:
     action = input("Search for code?").lower()
     if len(action) == codeClass.codeLen and " " not in action:
         search(action)  # Searches for desired code
-    elif len(action) == 2:
+    elif len(action) == 3:
         if action[0] == "m":
-            move(action[1])  # Moves player in their room
+            move(action[2])  # Moves player in their room
         elif action[0] == "a":
-            attack(action[1])  # Player attacks in their room
+            attack(action[2])  # Player attacks in their room
+    elif action == "l":
+        if player.onEdge:
+            player.leave()
+        else:
+            print("You must be on the edge of the room to leave.")
+    elif action == "stats":
+        player.checkStats()
+
